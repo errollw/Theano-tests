@@ -195,7 +195,7 @@ class MLP(object):
 
 
 def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
-             dataset='mnist.pkl.gz', batch_size=20, n_hidden=500):
+             dataset='mnist.pkl.gz', batch_size=20, n_hidden=500, n_in=28*28, n_out=10):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -251,9 +251,9 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     classifier = MLP(
         rng=rng,
         input=x,
-        n_in=28 * 28,
+        n_in=n_in,
         n_hidden=n_hidden,
-        n_out=10
+        n_out=n_out
     )
 
     # start-snippet-4
@@ -401,6 +401,8 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
                           ' ran for %.2fm' % ((end_time - start_time) / 60.))
+
+    return classifier
 
 
 if __name__ == '__main__':

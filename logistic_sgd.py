@@ -201,7 +201,7 @@ def load_data(dataset):
     print '... loading data'
 
     # Load the dataset
-    f = gzip.open(dataset, 'rb')
+    f = file(dataset, 'rb')
     train_set, valid_set, test_set = cPickle.load(f)
     f.close()
     #train_set, valid_set, test_set format: tuple(input, target)
