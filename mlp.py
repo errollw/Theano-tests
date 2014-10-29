@@ -195,7 +195,7 @@ class MLP(object):
 
 
 def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
-             dataset='mnist.pkl.gz', batch_size=20, n_hidden=500, n_in=28*28, n_out=10):
+             dataset='mnist.pkl.gz', batch_size=20, n_hidden=500, n_in=28*28, n_out=10, saved_weights=None):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -255,6 +255,14 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
         n_hidden=n_hidden,
         n_out=n_out
     )
+
+    # save initial weights
+    if saved_weights != None:
+        b1 = classifier.hiddenLayer.b.get_value()
+        w1 = classifier.hiddenLayer.W.get_value()
+        b2 = classifier.logRegressionLayer.b.get_value()
+        w2 = classifier.logRegressionLayer.W.get_value()
+        saved_weights.append((b1,w1,b2,w2))
 
     # start-snippet-4
     # the cost we minimize during training is the negative log likelihood of
@@ -389,6 +397,14 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                            'best model %f %%') %
                           (epoch, minibatch_index + 1, n_train_batches,
                            test_score * 100.))
+
+                    # save weights on improvement
+                    if saved_weights != None:
+                        b1 = classifier.hiddenLayer.b.get_value()
+                        w1 = classifier.hiddenLayer.W.get_value()
+                        b2 = classifier.logRegressionLayer.b.get_value()
+                        w2 = classifier.logRegressionLayer.W.get_value()
+                        saved_weights.append((b1,w1,b2,w2))
 
             if patience <= iter:
                 done_looping = True
